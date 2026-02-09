@@ -545,13 +545,7 @@
             </div>
         </div>
 
-        <!-- Name Input Screen -->
-        <div class="name-screen" id="nameScreen" style="display:none;">
-            <h2>Yay!</h2>
-            <p style="color:#666">(Personalization skipped)</p>
-            <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="30">
-            <button class="submit-btn" id="submitBtn">Continue</button>
-        </div>
+        
 
         <!-- Contract Screen -->
         <div class="contract-screen" id="contractScreen">
@@ -931,7 +925,7 @@
                 if (!musicPlaying) {
                     jazzAudio.play().catch(err => console.log('Audio play failed:', err));
                     musicPlaying = true;
-                    document.querySelector('.instruction').textContent = '🎵 Now playing romantic jazz... 💕';
+                    document.querySelector('.instruction').textContent = 'I LOVE YOU SO MUCH BBY! 💕';
                     
                     // Show the picture in the center
                     if (heartPic) {
