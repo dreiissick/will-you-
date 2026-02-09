@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Jazzmine — From Drei</title>
+    <link href="https://fonts.googleapis.com/css2?family=Carattere&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-primary: #FFB6D9;
+            --pink-light: #FFE5F1;
+            --pink-dark: #FF69B4;
+            --pink-accent: #FF1493;
+            --silver: #C0C0C0;
+            --cream: #FFF5F7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--cream) 50%, #FFD6E8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Elegant lace overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 182, 217, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Floating hearts background */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0.7;
+            animation: floatHeart 15s infinite ease-in-out;
+            filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.4));
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translate(0, 100vh) rotate(0deg) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(calc(var(--random-x) * 1px), -100px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        /* Initial Question Screen */
+        .question-screen {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: clamp(40px, 8vw, 80px) clamp(30px, 6vw, 60px);
+            box-shadow: 
+                0 30px 80px rgba(255, 105, 180, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(192, 192, 192, 0.2);
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            animation: slideIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+        }
+
+        .question-screen::before {
+            content: '✨';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 40px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-80px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            font-family: 'Carattere', cursive;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            color: var(--pink-accent);
+            margin-bottom: 50px;
+            text-shadow: 
+                2px 2px 0 rgba(192, 192, 192, 0.3),
+                4px 4px 10px rgba(255, 105, 180, 0.2);
+            animation: float 3s ease-in-out infinite;
+            line-height: 1.2;
+            font-weight: 400;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .buttons-container {
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        button {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, var(--pink-dark), var(--pink-accent));
+            color: white;
+            padding: 18px 45px;
+            animation: shimmer 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            right: -10px;
+            transition: transform 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
+        }
+
+        .yes-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        @keyframes shimmer {
+            0%, 100% { 
+                box-shadow: 0 8px 20px rgba(255, 20, 147, 0.3),
+                           0 0 20px rgba(255, 105, 180, 0.2);
+            }
+            50% { 
+                box-shadow: 0 8px 30px rgba(255, 20, 147, 0.5),
+                           0 0 40px rgba(255, 105, 180, 0.4);
+            }
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #E8E8E8, var(--silver));
+            color: #666;
+            padding: 18px 45px;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .no-btn:hover {
+            background: linear-gradient(135deg, #D8D8D8, #B0B0B0);
+            transform: scale(0.95);
+        }
+
+        /* Name Input Screen */
+        .name-screen {
+            display: none;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: clamp(40px, 8vw, 80px) clamp(30px, 6vw, 60px);
+            box-shadow: 
+                0 30px 80px rgba(255, 105, 180, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(192, 192, 192, 0.2);
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .name-screen h2 {
+            font-family: 'Carattere', cursive;
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--pink-accent);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .name-screen p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 18px 25px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            border: 2px solid var(--silver);
+            border-radius: 25px;
+            text-align: center;
+            background: rgba(255, 245, 247, 0.8);
+            color: var(--pink-accent);
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--pink-accent);
+            box-shadow: 0 0 20px rgba(255, 20, 147, 0.2);
+            background: white;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 105, 180, 0.5);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--pink-dark), var(--pink-accent));
+            color: white;
+            padding: 18px 50px;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        /* Contract Screen */
+        .contract-screen {
+            display: none;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: clamp(40px, 8vw, 80px) clamp(30px, 6vw, 60px);
+            box-shadow: 
+                0 30px 80px rgba(255, 105, 180, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8),
+                0 0 0 1px rgba(192, 192, 192, 0.2);
+            border: 2px solid rgba(192, 192, 192, 0.3);
+            animation: fadeIn 0.6s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .contract-screen h2 {
+            font-family: 'Carattere', cursive;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--pink-accent);
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .contract-content {
+            background: rgba(255, 245, 247, 0.6);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--silver);
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .contract-content p {
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .contract-content .signature {
+            font-family: 'Carattere', cursive;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--pink-accent);
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        .continue-btn {
+            background: linear-gradient(135deg, var(--pink-dark), var(--pink-accent));
+            color: white;
+            padding: 18px 50px;
+            width: 100%;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        /* 3D Heart Screen */
+        .heart-screen {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, var(--pink-light) 0%, var(--cream) 50%, #FFD6E8 100%);
+            z-index: 1000;
+        }
+
+        .heart-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        /* Photo in the center of floating hearts */
+        .heart-pic {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: clamp(200px, 40vw, 400px);
+            height: clamp(200px, 40vw, 400px);
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4),
+                        0 0 40px rgba(255, 105, 180, 0.3);
+            border: 6px solid rgba(255,255,255,0.9);
+            z-index: 1003;
+            display: none;
+            pointer-events: none;
+            animation: pulsePic 3s ease-in-out infinite;
+        }
+
+        @keyframes pulsePic {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 20px 60px rgba(255, 20, 147, 0.4),
+                            0 0 40px rgba(255, 105, 180, 0.3);
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 25px 70px rgba(255, 20, 147, 0.6),
+                            0 0 50px rgba(255, 105, 180, 0.5);
+            }
+        }
+
+        #heart3d {
+            width: clamp(300px, 60vw, 500px);
+            height: clamp(300px, 60vw, 500px);
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab;
+            transition: transform 0.1s;
+        }
+
+        #heart3d:active {
+            cursor: grabbing;
+        }
+
+        .heart-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: var(--pink-accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 20, 147, 0.8);
+            transform-style: preserve-3d;
+        }
+
+        .music-note {
+            position: fixed;
+            font-size: 30px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1001;
+            animation: musicFloat 3s ease-out forwards;
+        }
+
+        @keyframes musicFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-200px) rotate(360deg) scale(1.5);
+            }
+        }
+
+        .instruction {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            color: var(--pink-accent);
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
+            animation: pulse 2s ease-in-out infinite;
+            z-index: 1002;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        /* Hidden audio element */
+        audio {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+                min-height: auto;
+                gap: 14px;
+                align-items: center;
+                padding: 20px 0;
+            }
+
+            .no-btn {
+                /* Keep the layout flow on small screens so buttons stack nicely */
+                position: static !important;
+                transform: none !important;
+                left: auto !important;
+                top: auto !important;
+                margin-top: 8px;
+            }
+        }
+
+        /* Scrollbar styling */
+        .contract-screen::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .contract-screen::-webkit-scrollbar-track {
+            background: rgba(255, 182, 217, 0.2);
+            border-radius: 10px;
+        }
+
+        .contract-screen::-webkit-scrollbar-thumb {
+            background: var(--pink-dark);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="hearts-bg" id="heartsBg"></div>
+    
+    <!-- Photo in center (shown when music plays) -->
+    <img id="heartPic" class="heart-pic" src="valpic.jpg" alt="Our Picture">
+    <input type="file" id="photoInput" accept="image/*" style="display: none;">
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Question Screen -->
+        <div class="question-screen" id="questionScreen">
+                <h1>Will you be my Valentine?</h1>
+            <div class="buttons-container" id="buttonsContainer">
+                <button class="yes-btn" id="yesBtn">Yes</button>
+                <button class="no-btn" id="noBtn">No</button>
+            </div>
+        </div>
+
+        <!-- Name Input Screen -->
+        <div class="name-screen" id="nameScreen" style="display:none;">
+            <h2>Yay!</h2>
+            <p style="color:#666">(Personalization skipped)</p>
+            <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="30">
+            <button class="submit-btn" id="submitBtn">Continue</button>
+        </div>
+
+        <!-- Contract Screen -->
+        <div class="contract-screen" id="contractScreen">
+            <h2>Valentine's Contract 💌</h2>
+            <div class="contract-content">
+                <p><strong>This is for:</strong></p>
+                <p>Between: <span id="contractName1" style="color: var(--pink-accent); font-weight: 600;">Drei</span></p>
+                <p>And: <span id="contractName2" style="color: var(--pink-accent); font-weight: 600;">Jazzmine</span></p>
+
+                <p style="margin-top:20px;">We promise to share kindness, quiet moments, and everyday love — today and always.</p>
+
+                <div class="signature">
+                    — Drei
+                </div>
+            </div>
+            <button class="continue-btn" id="downloadContractBtn" style="display:inline-block; margin-bottom:12px;">Download Contract</button>
+            <button class="continue-btn" id="continueBtn">Accept & Continue ✨</button>
+        </div>
+    </div>
+
+    <!-- 3D Heart Screen -->
+    <div class="heart-screen" id="heartScreen">
+        <div class="heart-container">
+            <div id="heart3d"></div>
+        </div>
+        <div class="instruction">Click the heart to play music 🎵</div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="jazzAudio" loop>
+        <source src="bgmusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- jsPDF for client-side PDF generation -->
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+    <script>
+        // Create floating hearts
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('heartsBg');
+            const heartEmojis = ['❤️', '💕', '💖', '💗', '💓', '💝'];
+            
+            function addHeart() {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.setProperty('--random-x', (Math.random() * 200 - 100) * 10);
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.animationDuration = (8 + Math.random() * 7) + 's';
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 15000);
+            }
+            
+            // Create initial hearts
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => addHeart(), i * 500);
+            }
+            
+            // Continue creating hearts
+            setInterval(addHeart, 2000);
+        }
+        
+        createFloatingHearts();
+
+        // Button logic
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionScreen = document.getElementById('questionScreen');
+        const nameScreen = document.getElementById('nameScreen');
+        const contractScreen = document.getElementById('contractScreen');
+        const heartScreen = document.getElementById('heartScreen');
+        const nameInput = document.getElementById('nameInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const continueBtn = document.getElementById('continueBtn');
+        const downloadBtn = document.getElementById('downloadContractBtn');
+        const photoInput = document.getElementById('photoInput');
+        const heartPic = document.getElementById('heartPic');
+        const jazzAudio = document.getElementById('jazzAudio');
+
+        let yesClickCount = 0;
+        let userName = '';
+
+        // PDF download handler: generate personalized PDF including exact download timestamp
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const name1 = document.getElementById('contractName1').textContent.trim();
+                const name2 = document.getElementById('contractName2').textContent.trim();
+                const contractEl = document.querySelector('.contract-content');
+                const contractText = contractEl ? contractEl.innerText.replace(/\s+$/,'') : '';
+
+                const now = new Date();
+                const pad = (n) => String(n).padStart(2, '0');
+                const filename = `contract_${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}.pdf`;
+                const dateStr = now.toLocaleString();
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+                let x = 40;
+                let y = 60;
+
+                doc.setFontSize(20);
+                doc.text("Valentine's Contract", x, y);
+                y += 28;
+
+                doc.setFontSize(12);
+                doc.text(`This agreement is between:`, x, y);
+                y += 18;
+                doc.setFontSize(14);
+                doc.text(`${name1}  —  ${name2}`, x, y);
+                y += 22;
+
+                doc.setFontSize(12);
+                const wrapped = doc.splitTextToSize(contractText, 500);
+                doc.text(wrapped, x, y);
+                y += wrapped.length * 14 + 10;
+
+                doc.setFontSize(11);
+                doc.text(`Downloaded: ${dateStr}`, x, y);
+
+                doc.save(filename);
+            });
+        }
+
+        // Photo upload handling: allow user to select an image
+        if (photoInput && heartPic) {
+            // Option 1: Set image path directly (uncomment and set your image path):
+            // heartPic.src = 'your-image.jpg'; // or 'path/to/your/image.jpg'
+            
+            // Option 2: File upload (enabled by default)
+            photoInput.addEventListener('change', function() {
+                const file = this.files && this.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    heartPic.src = evt.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            // Allow clicking instruction text to upload photo
+            const instruction = document.querySelector('.instruction');
+            if (instruction) {
+                instruction.style.cursor = 'pointer';
+                instruction.title = 'Click to upload your picture';
+                instruction.addEventListener('click', function() {
+                    photoInput.click();
+                });
+            }
+        }
+
+        // No button - randomize position and make yes button grow
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            yesClickCount++;
+
+            // On small screens, still move randomly but within bounds
+            if (window.innerWidth <= 768) {
+                const margin = 10;
+                const randX = margin + Math.random() * (window.innerWidth - noBtn.offsetWidth - margin * 2);
+                const randY = margin + Math.random() * (window.innerHeight - noBtn.offsetHeight - margin * 2);
+                
+                noBtn.style.position = 'fixed';
+                noBtn.style.left = randX + 'px';
+                noBtn.style.top = randY + 'px';
+                noBtn.style.right = 'auto';
+                
+                // Grow yes button
+                const newSize = 1 + (yesClickCount * 0.2);
+                const newPadding = 18 + (yesClickCount * 3);
+                const baseFontSize = parseFloat(getComputedStyle(yesBtn).fontSize);
+                const newFontSize = baseFontSize * (1 + yesClickCount * 0.1);
+                yesBtn.style.transform = `scale(${newSize})`;
+                yesBtn.style.padding = `${newPadding}px ${45 + yesClickCount * 5}px`;
+                yesBtn.style.fontSize = `${newFontSize}px`;
+                
+                // Hide no button after 8 clicks
+                if (yesClickCount >= 8) {
+                    noBtn.style.opacity = '0';
+                    noBtn.style.pointerEvents = 'none';
+                    noBtn.style.transform = 'scale(0)';
+                }
+                return;
+            }
+
+            // Randomize position - try multiple random positions
+            const margin = 15;
+            const yesRect = yesBtn.getBoundingClientRect();
+            let placed = false;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.right = 'auto';
+            noBtn.style.transition = 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+            // Try up to 100 random positions
+            for (let i = 0; i < 100; i++) {
+                const randX = margin + Math.random() * (window.innerWidth - noBtn.offsetWidth - margin * 2);
+                const randY = margin + Math.random() * (window.innerHeight - noBtn.offsetHeight - margin * 2);
+
+                const proposed = {
+                    left: randX,
+                    top: randY,
+                    right: randX + noBtn.offsetWidth,
+                    bottom: randY + noBtn.offsetHeight
+                };
+
+                // Check if it overlaps with yes button
+                const overlap = !(proposed.right < yesRect.left - margin || 
+                                 proposed.left > yesRect.right + margin || 
+                                 proposed.bottom < yesRect.top - margin || 
+                                 proposed.top > yesRect.bottom + margin);
+
+                if (!overlap) {
+                    noBtn.style.left = randX + 'px';
+                    noBtn.style.top = randY + 'px';
+                    placed = true;
+                    break;
+                }
+            }
+
+            // Fallback: move to opposite corner
+            if (!placed) {
+                const tryTopRight = (yesRect.left < window.innerWidth / 2);
+                if (tryTopRight) {
+                    noBtn.style.left = (window.innerWidth - noBtn.offsetWidth - margin) + 'px';
+                    noBtn.style.top = margin + 'px';
+                } else {
+                    noBtn.style.left = margin + 'px';
+                    noBtn.style.top = (window.innerHeight - noBtn.offsetHeight - margin) + 'px';
+                }
+            }
+
+            // Grow yes button bigger and bigger
+            const newSize = 1 + (yesClickCount * 0.25);
+            const newPadding = 18 + (yesClickCount * 4);
+            const newFontSize = parseFloat(getComputedStyle(yesBtn).fontSize) * (1 + yesClickCount * 0.1);
+            yesBtn.style.transform = `scale(${newSize})`;
+            yesBtn.style.padding = `${newPadding}px ${45 + yesClickCount * 6}px`;
+            yesBtn.style.fontSize = `${newFontSize}px`;
+
+            // Hide no button completely after 8 clicks
+            if (yesClickCount >= 8) {
+                noBtn.style.opacity = '0';
+                noBtn.style.pointerEvents = 'none';
+                noBtn.style.transform = 'scale(0)';
+                noBtn.style.transition = 'all 0.5s ease-out';
+            }
+        });
+
+        // Yes button - show contract directly (personalized)
+        yesBtn.addEventListener('click', function() {
+            questionScreen.style.display = 'none';
+            contractScreen.style.display = 'block';
+        });
+
+        // Submit name - show contract
+        submitBtn.addEventListener('click', function() {
+            userName = nameInput.value.trim();
+            if (userName === '') {
+                alert('Please enter your name! 💕');
+                return;
+            }
+            
+            document.getElementById('contractName2').textContent = userName;
+            document.getElementById('contractName1').textContent = 'Your Secret Admirer';
+            
+            nameScreen.style.display = 'none';
+            contractScreen.style.display = 'block';
+        });
+
+        // Enter key on name input
+        nameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitBtn.click();
+            }
+        });
+
+        // Continue to 3D heart
+        continueBtn.addEventListener('click', function() {
+            contractScreen.style.display = 'none';
+            heartScreen.style.display = 'block';
+            create3DHeart();
+        });
+
+        // 3D Heart creation with matrix
+        function create3DHeart() {
+            const heart3d = document.getElementById('heart3d');
+            heart3d.innerHTML = '';
+            
+            const points = [];
+            const numPoints = 200;
+            
+            // Heart shape parametric equation
+            for (let i = 0; i < numPoints; i++) {
+                const t = (i / numPoints) * Math.PI * 2;
+                const x = 16 * Math.pow(Math.sin(t), 3);
+                const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+                const z = Math.sin(t) * 3;
+                
+                const point = document.createElement('div');
+                point.className = 'heart-point';
+                
+                const scale = 8;
+                point.style.transform = `translate3d(${x * scale}px, ${y * scale}px, ${z * scale}px)`;
+                
+                heart3d.appendChild(point);
+                points.push(point);
+            }
+            
+            // Rotation variables
+            let rotationX = 0;
+            let rotationY = 0;
+            let isDragging = false;
+            let previousMouseX = 0;
+            let previousMouseY = 0;
+            
+            // Auto-rotate
+            let autoRotate = setInterval(() => {
+                rotationY += 1;
+                heart3d.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+            }, 50);
+            
+            // Mouse/Touch drag to rotate
+            heart3d.addEventListener('mousedown', startDrag);
+            heart3d.addEventListener('touchstart', startDrag);
+            
+            function startDrag(e) {
+                isDragging = true;
+                clearInterval(autoRotate);
+                previousMouseX = e.clientX || e.touches[0].clientX;
+                previousMouseY = e.clientY || e.touches[0].clientY;
+            }
+            
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('touchmove', drag);
+            
+            function drag(e) {
+                if (!isDragging) return;
+                
+                const currentX = e.clientX || e.touches[0].clientX;
+                const currentY = e.clientY || e.touches[0].clientY;
+                
+                const deltaX = currentX - previousMouseX;
+                const deltaY = currentY - previousMouseY;
+                
+                rotationY += deltaX * 0.5;
+                rotationX -= deltaY * 0.5;
+                
+                heart3d.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+                
+                previousMouseX = currentX;
+                previousMouseY = currentY;
+            }
+            
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchend', stopDrag);
+            
+            function stopDrag() {
+                if (isDragging) {
+                    isDragging = false;
+                    autoRotate = setInterval(() => {
+                        rotationY += 1;
+                        heart3d.style.transform = `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
+                    }, 50);
+                }
+            }
+            
+            // Click to play jazz music
+            let musicPlaying = false;
+            let musicNotesInterval = null;
+            heart3d.addEventListener('click', function(e) {
+                if (!musicPlaying) {
+                    jazzAudio.play().catch(err => console.log('Audio play failed:', err));
+                    musicPlaying = true;
+                    document.querySelector('.instruction').textContent = '🎵 Now playing romantic jazz... 💕';
+                    
+                    // Show the picture in the center
+                    if (heartPic) {
+                        heartPic.style.display = 'block';
+                    }
+                    
+                    // Create music notes animation
+                    createMusicNotes(e.clientX, e.clientY);
+                    if (musicNotesInterval) clearInterval(musicNotesInterval);
+                    musicNotesInterval = setInterval(() => {
+                        createMusicNotes(
+                            Math.random() * window.innerWidth,
+                            Math.random() * window.innerHeight
+                        );
+                    }, 1000);
+                } else {
+                    jazzAudio.pause();
+                    musicPlaying = false;
+                    document.querySelector('.instruction').textContent = 'Click the heart to play music 🎵';
+                    
+                    // Hide the picture when music stops
+                    if (heartPic) {
+                        heartPic.style.display = 'none';
+                    }
+                    
+                    if (musicNotesInterval) {
+                        clearInterval(musicNotesInterval);
+                        musicNotesInterval = null;
+                    }
+                }
+            });
+
+            // Photo will be shown when music plays (handled in click handler)
+        }
+        
+        // Create floating music notes
+        function createMusicNotes(x, y) {
+            const notes = ['🎵', '🎶', '♪', '♫'];
+            const note = document.createElement('div');
+            note.className = 'music-note';
+            note.textContent = notes[Math.floor(Math.random() * notes.length)];
+            note.style.left = x + 'px';
+            note.style.top = y + 'px';
+            note.style.color = `hsl(${Math.random() * 60 + 300}, 80%, 60%)`;
+            document.body.appendChild(note);
+            
+            setTimeout(() => {
+                note.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
