@@ -642,6 +642,12 @@
             downloadBtn.addEventListener('click', function(e) {
                 e.preventDefault();
 
+                // Safely check that jsPDF loaded; don't break the rest of the page if CDN fails
+                if (!window.jspdf || !window.jspdf.jsPDF) {
+                    alert('PDF download is temporarily unavailable. Please check your internet connection and try again. 💕');
+                    return;
+                }
+
                 const name1 = document.getElementById('contractName1').textContent.trim();
                 const name2 = document.getElementById('contractName2').textContent.trim();
                 const contractEl = document.querySelector('.contract-content');
@@ -652,7 +658,7 @@
                 const filename = `contract_${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}.pdf`;
                 const dateStr = now.toLocaleString();
 
-                const { jsPDF } = window.jspdf;
+                const jsPDF = window.jspdf.jsPDF;
                 const doc = new jsPDF({ unit: 'pt', format: 'letter' });
                 let x = 40;
                 let y = 60;
@@ -930,7 +936,7 @@
                 if (!musicPlaying) {
                     jazzAudio.play().catch(err => console.log('Audio play failed:', err));
                     musicPlaying = true;
-                    document.querySelector('.instruction').textContent = '💕 I LOVE YOU SO MUCH BBY!! 💕';
+                    document.querySelector('.instruction').textContent = '💕 I LOVE YOU SO MUCH!! 💕';
                     
                     // Show the picture in the center
                     if (heartPic) {
