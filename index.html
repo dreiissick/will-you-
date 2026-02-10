@@ -180,7 +180,7 @@
             color: white;
             padding: 18px 45px;
             animation: shimmer 3s ease-in-out infinite;
-            position: center;
+            position: CENTER;
             overflow: hidden;
             transition: transform 0.3s ease, font-size 0.3s ease, padding 0.3s ease;
         }
@@ -226,7 +226,7 @@
             background: linear-gradient(135deg, #E8E8E8, var(--silver));
             color: #666;
             padding: 18px 45px;
-            position: center;
+            position: CENTER;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
@@ -544,7 +544,13 @@
             </div>
         </div>
 
-        
+        <!-- Name Input Screen -->
+        <div class="name-screen" id="nameScreen" style="display:none;">
+            <h2>Yay!</h2>
+            <p style="color:#666">(Personalization skipped)</p>
+            <input type="text" id="nameInput" placeholder="Enter your name..." maxlength="30">
+            <button class="submit-btn" id="submitBtn">Continue</button>
+        </div>
 
         <!-- Contract Screen -->
         <div class="contract-screen" id="contractScreen">
@@ -924,7 +930,7 @@
                 if (!musicPlaying) {
                     jazzAudio.play().catch(err => console.log('Audio play failed:', err));
                     musicPlaying = true;
-                    document.querySelector('.instruction').textContent = 'I LOVE YOU SO MUCH BBY! 💕';
+                    document.querySelector('.instruction').textContent = '💕 I LOVE YOU SO MUCH BBY!! 💕';
                     
                     // Show the picture in the center
                     if (heartPic) {
